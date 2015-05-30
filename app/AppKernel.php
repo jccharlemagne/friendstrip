@@ -34,4 +34,31 @@ class AppKernel extends Kernel
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheDir()
+    {
+        return $this->getVarDir() . '/cache';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogDir()
+    {
+        return $this->getVarDir() . '/logs';
+    }
+
+
+    /**
+     * Get var directory path
+     *
+     * @return string
+     */
+    protected function getVarDir()
+    {
+        return $this->rootDir . '/../var';
+    }
 }

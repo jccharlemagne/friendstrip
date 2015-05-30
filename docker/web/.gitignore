@@ -1,0 +1,4 @@
+/shared/logs/*
+!/shared/logs/.gitkeep
+/shared/composer-home/*
+!/shared/composer-home/.gitkeep

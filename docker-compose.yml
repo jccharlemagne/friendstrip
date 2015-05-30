@@ -1,5 +1,6 @@
 # @see https://docs.docker.com/compose/#compose-documentation
 
+# Web container
 web: &web
     build: ./docker/web
     ports:
@@ -20,3 +21,15 @@ web: &web
         - SYMFONY__FIXTURES__FRONT__FAT__DISABLED
         # Composer shared home:
         - COMPOSER_HOME=/composer-home
+    links:
+        - mysql
+
+# MySQL container
+mysql:
+    image: mysql:5.5
+    ports:
+        - 13306:3306
+    environment:
+        MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    volumes:
+        - ./docker/mysql/shared/mysql-data:/var/lib/mysql

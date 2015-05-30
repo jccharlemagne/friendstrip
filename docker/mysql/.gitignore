@@ -1,0 +1,2 @@
+/shared/mysql-data/*
+!/shared/mysql-data/.gitkeep
