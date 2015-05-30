@@ -1,0 +1,12 @@
+#!/bin/bash
+# @see https://github.com/docker-library/php/blob/master/5.5/apache/apache2-foreground
+set -e
+
+# Apache gets grumpy about PID files pre-existing
+rm -f /var/run/apache2/apache2.pid
+
+# Shared files permissions (Oh, 777 is so evil! But this is a dev environment, isnt'it?)
+chmod -R 777 /var/www/var/cache/ /var/www/var/logs/ || true
+
+# Go! Go! Go!
+exec apache2ctl -DFOREGROUND

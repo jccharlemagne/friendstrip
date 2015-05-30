@@ -1,0 +1,22 @@
+# @see https://docs.docker.com/compose/#compose-documentation
+
+web: &web
+    build: ./docker/web
+    ports:
+        - 10080:80 # Apache
+    volumes:
+        # Our app folder
+        - .:/var/www
+        # Shared apache logs
+        - ./docker/web/shared/logs/apache2:/var/log/apache2
+        # Site enabled
+        - ./docker/web/shared/sites-enabled:/etc/apache2/sites-enabled
+        # Composer cache
+        - ./docker/web/shared/composer-home:/composer-home
+    working_dir: /var/www
+    env_file: ./docker/web/web.env
+    environment:
+        # Env variables shared with host machines:
+        - SYMFONY__FIXTURES__FRONT__FAT__DISABLED
+        # Composer shared home:
+        - COMPOSER_HOME=/composer-home
