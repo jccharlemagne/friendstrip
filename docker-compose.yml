@@ -14,6 +14,8 @@ web: &web
         - ./docker/web/shared/sites-enabled:/etc/apache2/sites-enabled
         # Composer cache
         - ./docker/web/shared/composer-home:/composer-home
+        # Shared var
+        - ./var:/var/www/var
     working_dir: /var/www
     env_file: ./docker/web/web.env
     environment:
@@ -21,8 +23,6 @@ web: &web
         - SYMFONY__FIXTURES__FRONT__FAT__DISABLED
         # Composer shared home:
         - COMPOSER_HOME=/composer-home
-    links:
-        - mysql
 
 # MySQL container
 mysql:
