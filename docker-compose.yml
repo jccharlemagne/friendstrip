@@ -23,6 +23,8 @@ web: &web
         - SYMFONY__FIXTURES__FRONT__FAT__DISABLED
         # Composer shared home:
         - COMPOSER_HOME=/composer-home
+    links:
+        - mysql
 
 # MySQL container
 mysql:
