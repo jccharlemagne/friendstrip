@@ -1,4 +1,5 @@
 friendstrip
 ===========
 
-A Symfony project created on May 30, 2015, 9:51 am.
+Symfony2 installations tips:
+* [Remove ACME DemoBundle](docs/symfony-installation-tips/remove-acme-demobundle.md)
