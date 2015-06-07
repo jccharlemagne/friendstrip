@@ -1,3 +1,6 @@
+fos_user:
+    resource: "@FriendseventsFrontBundle/Resources/config/routing/fos_user.yml"
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

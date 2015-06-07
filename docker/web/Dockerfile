@@ -44,6 +44,7 @@ RUN chmod +x /usr/local/bin/composer
 
 # Shared files
 COPY container-build-resources/xdebug.ini /etc/php5/mods-available/xdebug.ini
+COPY container-build-resources/php.ini /etc/php5/apache2/php.ini
 
 COPY container-build-resources/container-entry-point /usr/local/bin/
 RUN chmod +x /usr/local/bin/container-entry-point
