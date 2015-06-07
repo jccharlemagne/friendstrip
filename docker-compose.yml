@@ -28,10 +28,21 @@ web: &web
 
 # MySQL container
 mysql:
-    image: mysql:5.5
+    image: mysql:latest
     ports:
         - 13306:3306
     environment:
         MYSQL_ALLOW_EMPTY_PASSWORD: yes
     volumes:
         - ./docker/mysql/shared/mysql-data:/var/lib/mysql
+
+# Adminer container
+adminer:
+    build: ./docker/adminer
+    ports:
+        - 10081:80 # Apache
+    volumes:
+        # Let's give our own "sites-enabled" config files to Apache:
+        - ./docker/adminer/shared/sites-enabled:/etc/apache2/sites-enabled
+    links:
+        - mysql

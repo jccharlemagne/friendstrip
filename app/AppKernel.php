@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -17,6 +18,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
+            new Friendsevents\Bundle\FrontBundle\FriendseventsFrontBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -32,6 +34,7 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
+        $this->overrideParametersWithEnvironmentVariables($loader);
     }
 
     /**
@@ -50,7 +53,6 @@ class AppKernel extends Kernel
         return $this->getVarDir() . '/logs/' . $this->getName();
     }
 
-
     /**
      * Get var directory path
      *
@@ -59,5 +61,24 @@ class AppKernel extends Kernel
     protected function getVarDir()
     {
         return $this->rootDir . '/../var';
+    }
+
+    protected function overrideParametersWithEnvironmentVariables(LoaderInterface $loader)
+    {
+        $envParameters = $this->getEnvParameters();
+
+        $loader->load(function(ContainerInterface $container) use($envParameters) {
+            $appName = $this->getName();
+            if ('_' === substr($appName, -1)) {
+                // It seems that are building a Symfony compiled container (app name ends with "_")
+                // --> let's display the environment variables config overrides:
+                echo "\033[36m" . sprintf(
+                        'app config overrides with ENV variables: %s',
+                        json_encode($envParameters, JSON_PRETTY_PRINT)
+                    ) . "\033[0m" . PHP_EOL ;
+            }
+
+            $container->getParameterBag()->add($envParameters);
+        });
     }
 }

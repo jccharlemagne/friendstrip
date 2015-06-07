@@ -22,6 +22,8 @@ if ($debug) {
     Debug::enable();
 }
 
+date_default_timezone_set('Europe/Paris');
+
 $kernel = new AppKernel($env, $debug);
 $application = new Application($kernel);
 $application->run($input);
